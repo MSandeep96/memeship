@@ -32,6 +32,8 @@
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
   "license": "Apache-2.0",
   "dependencies": {
+    "axios": "^0.21.1",
+    "instagram-private-api": "^1.44.0",
     "tslib": "~2.1.0"
   },
   "volta": {
