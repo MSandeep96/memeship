@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import { join } from 'path';
+import { encryptor } from '../util/cipher';
 
-const cacheFilePath = join(__dirname, 'cache.json');
+const cacheFilePath = join(__dirname, '..', '..', '..', 'cache.encrypt');
 
 class Cache {
   memesSent = new Map<string, Set<string>>();
@@ -40,7 +41,8 @@ class Cache {
   init = (): void => {
     if (fs.existsSync(cacheFilePath)) {
       try {
-        const cache = JSON.parse(fs.readFileSync(cacheFilePath).toString());
+        const encryptedCache = fs.readFileSync(cacheFilePath).toString();
+        const cache = JSON.parse(encryptor.decrypt(encryptedCache));
         Object.entries(cache.memesSent).forEach(([username, memeUrls]) => {
           this.memesSent.set(username, new Set(memeUrls as string[]));
         });
@@ -62,7 +64,8 @@ class Cache {
     cache.userIds = Object.fromEntries(this.userIds);
     try {
       const cacheJson = JSON.stringify(cache);
-      fs.writeFileSync(cacheFilePath, cacheJson);
+      const encryptedCache = encryptor.encrypt(cacheJson);
+      fs.writeFileSync(cacheFilePath, encryptedCache);
     } catch (err) {
       console.log('Updating cache file failed');
     }
