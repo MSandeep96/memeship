@@ -49,6 +49,8 @@ class Cache {
         console.log('Failed to read cache');
       }
     }
+    console.log(this.memesSent);
+    console.log(this.userIds);
   };
 
   deinit = (): void => {
