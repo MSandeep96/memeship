@@ -6,10 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  sendMemez:
 
     runs-on: ubuntu-latest
-
+    env:
+      IG_USERNAME: ${{secrets.IG_USERNAME}}
+      IG_PASSWORD: ${{secrets.IG_PASSWORD}}
     steps:
     - uses: actions/checkout@v2
     - uses: volta-cli/action@v1
