@@ -5,6 +5,7 @@ import { cache } from '../cache/cache';
 export class RedditClient {
   static async getMeme(
     username: string,
+    logUsername: string,
     subs: string[]
   ): Promise<{ buffer: Buffer; url: string; type: string }> {
     const sub = subs[Math.floor(Math.random() * subs.length)];
@@ -16,7 +17,7 @@ export class RedditClient {
         !cache.hasMemeBeenSent(username, data.url)
     ).data;
     console.log(
-      `Picked subreddit ${sub} and meme url at ${pickedPost.url} for ${username}`
+      `Picked subreddit ${sub} and meme url at ${pickedPost.url} for ${logUsername}`
     );
     let buffer;
     if (pickedPost.post_hint === 'image') {

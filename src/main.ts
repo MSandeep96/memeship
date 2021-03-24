@@ -1,18 +1,21 @@
 import { igClient } from './ig/ig_client';
-import { config } from './config';
 import { RedditClient } from './reddit/reddit_client';
 import { cache } from './cache/cache';
+import { config } from './config';
+import { encryptor } from './util/cipher';
 
 const sendMeme = async (friend) => {
-  console.log('Sending meme to ' + friend.username);
+  const logUsername = encryptor.encrypt(friend.username);
+  console.log('Sending meme to ' + logUsername);
   try {
     const thread = await igClient.getThread(friend.username);
-    console.log(`Got thread for ${friend.username}`);
+    console.log(`Got thread for ${logUsername}`);
     const { buffer, url, type } = await RedditClient.getMeme(
       friend.username,
+      logUsername,
       friend.subreddits
     );
-    console.log(`Downloaded meme for ${friend.username}`);
+    console.log(`Downloaded meme for ${logUsername}`);
     if (type === 'image') {
       await thread.broadcastPhoto({
         file: buffer,
@@ -22,11 +25,11 @@ const sendMeme = async (friend) => {
         video: buffer,
       });
     }
-    console.log(`Successfully sent meme to ${friend.username}`);
+    console.log(`Successfully sent meme to ${logUsername}`);
     cache.addMemeSent(friend.username, url);
   } catch (err) {
     console.log(err);
-    console.log(`Sending meme to ${friend.username} failed`);
+    console.log(`Sending meme to ${logUsername} failed`);
   }
 };
 
