@@ -15,12 +15,10 @@ class IgClient {
 
   login = async () => {
     this.ig.state.generateDevice(process.env.IG_USERNAME);
-    await this.ig.simulate.preLoginFlow();
     this.loggedInUser = await this.ig.account.login(
       process.env.IG_USERNAME,
       process.env.IG_PASSWORD
     );
-    process.nextTick(async () => await this.ig.simulate.postLoginFlow());
   };
 
   getThread = async (username) => {

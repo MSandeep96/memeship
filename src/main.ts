@@ -8,15 +8,20 @@ const sendMeme = async (friend) => {
   try {
     const thread = await igClient.getThread(friend.username);
     console.log(`Got thread for ${friend.username}`);
-    const { buffer, url } = await RedditClient.getMeme(
+    const { buffer, url, type } = await RedditClient.getMeme(
       friend.username,
       friend.subreddits
     );
     console.log(`Downloaded meme for ${friend.username}`);
-    await thread.broadcastPhoto({
-      file: buffer,
-    });
-
+    if (type === 'image') {
+      await thread.broadcastPhoto({
+        file: buffer,
+      });
+    } else {
+      await thread.broadcastVideo({
+        video: buffer,
+      });
+    }
     console.log(`Successfully sent meme to ${friend.username}`);
     cache.addMemeSent(friend.username, url);
   } catch (err) {
