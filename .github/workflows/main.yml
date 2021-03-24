@@ -28,7 +28,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: build/src/cache/cache.json
-        key: cache-memeship
+        key: cache-${{hashFiles('build/src/cache/cache.json')}}
 
     - run: npm run start
       env:
