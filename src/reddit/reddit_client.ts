@@ -15,7 +15,9 @@ export class RedditClient {
         RedditClient.isValidMemeType(data) &&
         !cache.hasMemeBeenSent(username, data.url)
     ).data;
-    console.log(`Picked meme url at ${pickedPost.url} for ${username}`);
+    console.log(
+      `Picked subreddit ${sub} and meme url at ${pickedPost.url} for ${username}`
+    );
     let buffer;
     if (pickedPost.post_hint === 'image') {
       const image = await Jimp.read(pickedPost.url);
