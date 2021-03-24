@@ -15,8 +15,21 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: volta-cli/action@v1
+
+    - uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     - run: npm ci --no-audit
     - run: npm run build --if-present
+
+    - uses: actions/cache@v2
+      with:
+        path: build/src/cache/cache.json
+        key: cache-memeship
+
     - run: npm run start
       env:
         CI: true
