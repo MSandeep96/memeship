@@ -12,10 +12,7 @@ program
 
 const generate = () => {
   try {
-    fs.writeFileSync(
-      encryptConfigPath,
-      JSON.stringify(defaultConfig, null, '  ')
-    );
+    fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, '  '));
   } catch (err) {
     console.log(err);
     console.log('Error working with config file');

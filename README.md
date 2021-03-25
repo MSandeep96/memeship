@@ -1,107 +1,85 @@
-[![Sponsor][sponsor-badge]][sponsor]
-[![TypeScript version][ts-badge]][typescript-4-2]
-[![Node.js version][nodejs-badge]][nodejs]
-[![APLv2][license-badge]][license]
-[![Build Status - Travis][travis-badge]][travis-ci]
-[![Build Status - GitHub Actions][gha-badge]][gha-ci]
+# Memeship
 
-# node-typescript-boilerplate
+### Automate sending memes from Reddit to your friends on Instagram right from a public Github repo.
 
-👩🏻‍💻 Developer Ready: A comprehensive template. Works out of the box for most [Node.js][nodejs] projects.
+Features:
+- Choose subreddits for each username (works best with image based subreddits)
+- Sleep time (can't have the bot sending memes while you're asleep)
+- Encrypted config (don't want friends snooping on this repo to know whose dms you in)
 
-🏃🏽 Instant Value: All basic tools included and configured:
+Check project for other upcoming features. 
+Meanwhile feel free to open an issue for feature requests.
 
-- [TypeScript][typescript] [4.2][typescript-4-2]
-- [ESLint][eslint] with some initial rules recommendation
-- [Jest][jest] for fast unit testing and code coverage
-- Type definitions for Node.js and Jest
-- [Prettier][prettier] to enforce consistent code style
-- NPM [scripts](#available-scripts) for common operations
-- Simple example of TypeScript code and unit test
-- .editorconfig for consistent file format
-- Reproducible environments thanks to [Volta][volta]
-- Example configuration for [GitHub Actions][gh-actions] and [Travis CI][travis]
+## Setup
 
-🤲 Free as in speech: available under the APLv2 license.
+Create your own repo by clicking the **[template link][repo-template-action]**.
 
-## Getting Started
+Clone the repo and set the following **environment variable** on your machine.  
+You can use anything as your secret key but note this down as you'll have to set it on your Github repo later on.
 
-This project is intended to be used with the latest Active LTS release of [Node.js][nodejs].
-
-### Use as a repository template
-
-To start, just click the **[Use template][repo-template-action]** link (or the green button). Now start adding your code in the `src` and unit tests in the `__tests__` directories.
-
-### Clone repository
-
-To clone the repository use the following commands:
-
-```sh
-git clone https://github.com/jsynowiec/node-typescript-boilerplate
-cd node-typescript-boilerplate
-npm install
+```
+SECRET_KEY = 'some_secret_key'
 ```
 
-### Download latest release
-
-Download and unzip current `main` branch or one of tags:
-
+Generate a config file by running 
 ```sh
-wget https://github.com/jsynowiec/node-typescript-boilerplate/archive/main.zip -O node-typescript-boilerplate.zip
-unzip node-typescript-boilerplate.zip && rm node-typescript-boilerplate.zip
+npm i
+npm run config:generate
 ```
 
-## Available Scripts
+This must have generated a **config.json** at the root of the project.
+The file's content must be something like the following. Update the config file accordingly. 
+```
+{
+  "friends": [
+    {
+      "username": "example",  //username of a friend
+      "frequency": 2,         //sends once every 'frequency' hours
+      "subreddits": [         //randomly picks a subreddit from this array for this username
+        "programmerhumor",
+        "memes",
+        "dankmemes"
+      ]
+    },
+    ... other users here
+  ],
+  "startHour": 8,             //send memes only after (24 hour format)  essentially 8AM
+  "stopAtHour": 1,            //stop sending memes after (24 hour format) 1AM
+  "timezoneOffset": "+0530"   //your timezone in this format (+0800, -0430, etc)
+}
+```
 
-- `clean` - remove coverage data, Jest cache and transpiled files,
-- `build` - transpile TypeScript to ES6,
-- `build:watch` - interactive watch mode to automatically transpile source files,
-- `lint` - lint source files and tests,
-- `test` - run tests,
-- `test:watch` - interactive watch mode to automatically re-run tests
+Once you've updated the config file, run the following command to encrypt it.
+```
+npm run config:encrypt
+```
+This should create a config.encrypt file at the root of your project.
 
-## Additional Informations
+Commit and push your changes back to your repo.
+```
+git commit -am "Updated config"
+git push
+```
+**Note** : Your original config.json is not pushed to the repo so as to prevent your friends from snooping.
 
-### Why include Volta
+We now have to set environment variables on your Github repo.
+For this on your repo's page, go to [Settings] -> [Secrets]
 
-[Volta][volta]’s toolchain always keeps track of where you are, it makes sure the tools you use always respect the settings of the project you’re working on. This means you don’t have to worry about changing the state of your installed software when switching between projects. For example, it's [used by engineers at LinkedIn][volta-tomdale] to standarize tools and have reproducible development environments.
+Now using [New repository secret] button, set the following repo secrets mentioned in [YOUR_SECRET_NAME: 'value'] format
+```
+IG_USERNAME: 'your username'
+IG_PASSWORD: 'your password'
+SECRET_KEY : 'secret key you used on your machine' 
+```
+**Note** : The secret key given here must match the one used on your machine or the bot wont be able to decrypt your config.encrypt
 
-I recommend to [install][volta-getting-started] Volta and use it to manage your project's toolchain.
+Aaaaaaaaand you're done!
 
-### Writing tests in JavaScript
+## Updating config file
+Want to update your config file but lost it? 
+Take a pull and decrypt your config.encrypt file using 
+```
+npm run config:decrypt
+```
 
-Writing unit tests in TypeScript can sometimes be troublesome and confusing. Especially when mocking dependencies and using spies.
-
-This is **optional**, but if you want to learn how to write JavaScript tests for TypeScript modules, read the [corresponding wiki page][wiki-js-tests].
-
-## Backers & Sponsors
-
-Support this project by becoming a [sponsor][sponsor].
-
-## License
-
-Licensed under the APLv2. See the [LICENSE](https://github.com/jsynowiec/node-typescript-boilerplate/blob/main/LICENSE) file for details.
-
-[ts-badge]: https://img.shields.io/badge/TypeScript-4.2-blue.svg
-[nodejs-badge]: https://img.shields.io/badge/Node.js->=%2014.16-blue.svg
-[nodejs]: https://nodejs.org/dist/latest-v14.x/docs/api/
-[travis-badge]: https://travis-ci.org/jsynowiec/node-typescript-boilerplate.svg?branch=main
-[travis-ci]: https://travis-ci.org/jsynowiec/node-typescript-boilerplate
-[gha-badge]: https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fjsynowiec%2Fnode-typescript-boilerplate%2Fbadge&style=flat
-[gha-ci]: https://github.com/jsynowiec/node-typescript-boilerplate/actions
-[typescript]: https://www.typescriptlang.org/
-[typescript-4-2]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-2.html
-[license-badge]: https://img.shields.io/badge/license-APLv2-blue.svg
-[license]: https://github.com/jsynowiec/node-typescript-boilerplate/blob/main/LICENSE
-[sponsor-badge]: https://img.shields.io/badge/♥-Sponsor-fc0fb5.svg
-[sponsor]: https://github.com/sponsors/jsynowiec
-[jest]: https://facebook.github.io/jest/
-[eslint]: https://github.com/eslint/eslint
-[wiki-js-tests]: https://github.com/jsynowiec/node-typescript-boilerplate/wiki/Unit-tests-in-plain-JavaScript
-[prettier]: https://prettier.io
-[volta]: https://volta.sh
-[volta-getting-started]: https://docs.volta.sh/guide/getting-started
-[volta-tomdale]: https://twitter.com/tomdale/status/1162017336699838467?s=20
-[gh-actions]: https://github.com/features/actions
-[travis]: https://travis-ci.org
-[repo-template-action]: https://github.com/jsynowiec/node-typescript-boilerplate/generate
+[repo-template-action]: https://github.com/MSandeep96/memeship/generate

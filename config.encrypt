@@ -1,1 +1,16 @@
-d230de7238173a4dc62fb5c4bc4cfab4508973d80ee1109359f369de4c5b4470dc005689c09554b49024dfcf0dc6289d8ol8sgMkX5AXZc4prUWITaWdynpM4teXEK2ebx47DLfrgNQyygSpQBdeE74IsoKVZGetklDNLOi5F2whHwbCXpAndIm8e0vg8A44wlo/fyhWSlOgnFJ7yswTmiiBNx8DxQSBrh9EfkjwM22bGRhphyUaKT6V+0HuKNk/NlJ4lqI6iqg3eHiYKKPF4SjEyE6ERQbFeIUC71utt76AB2NaTOekJVdLcblD5C7sRbJ/yVHPXcGjrPueJLzJzA5VpuMk9XMiOE/kXP+T0N9CXmajpngDXdESURvLOpSE414BxrMBNtUPphe4q1sd7r9Gj+7XDmxL8OarH1z4qG0/+WKWJ16J6dSXvq5AAV3hN/i9NVHhNBp7P4s71BCctu9Na/nZc1Tn7fGmAalD83S4LkkD3A==
+{
+  "friends": [
+    {
+      "username": "example",
+      "frequency": 2,
+      "subreddits": [
+        "programmerhumor",
+        "memes",
+        "dankmemes"
+      ]
+    }
+  ],
+  "startHour": 8,
+  "stopAtHour": 1,
+  "timezoneOffset": "+0530"
+}
