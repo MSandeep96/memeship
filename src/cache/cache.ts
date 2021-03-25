@@ -7,6 +7,7 @@ const cacheFilePath = join(__dirname, '..', '..', '..', 'cache.encrypt');
 class Cache {
   memesSent = new Map<string, Set<string>>();
   userIds = new Map<string, string>();
+  triggerNo = 0;
 
   getUserIdMapping = (username: string): string | undefined => {
     if (this.userIds.has(username)) {
@@ -47,6 +48,7 @@ class Cache {
           this.memesSent.set(username, new Set(memeUrls as string[]));
         });
         this.userIds = new Map(Object.entries(cache.userIds));
+        this.triggerNo = cache.triggerNo + 1;
       } catch (e) {
         console.log('Failed to read cache');
       }
@@ -56,7 +58,7 @@ class Cache {
   };
 
   deinit = (): void => {
-    const cache = { memesSent: {}, userIds: {} };
+    const cache = { memesSent: {}, userIds: {}, triggerNo: this.triggerNo };
     const memesSent = Object.fromEntries(this.memesSent);
     Object.entries(memesSent).forEach(([username, memesUrl]) => {
       cache.memesSent[username] = Array.from(memesUrl);

@@ -32,9 +32,9 @@
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest",
     "test:watch": "jest --watch",
-    "config:generate": "npm run build && node build/src/config.js -g",
-    "config:encrypt": "npm run build && node build/src/config.js -e",
-    "config:decrypt": "npm run build && node build/src/config.js -d"
+    "config:generate": "npm run build && node build/src/config/config_gen.js -g",
+    "config:encrypt": "npm run build && node build/src/config/config_gen.js -e",
+    "config:decrypt": "npm run build && node build/src/config/config_gen.js -d"
   },
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
   "license": "Apache-2.0",

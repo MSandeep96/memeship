@@ -1,12 +1,15 @@
 import { igClient } from './ig/ig_client';
 import { RedditClient } from './reddit/reddit_client';
 import { cache } from './cache/cache';
-import { config } from './config';
+import { config } from './config/config';
 import { encryptor } from './util/cipher';
 
 const sendMeme = async (friend) => {
   const logUsername = encryptor.encrypt(friend.username);
-  console.log('Sending meme to ' + logUsername);
+  if (cache.triggerNo % friend.frequency !== 0) {
+    console.log(`Not sending meme to ${logUsername}`);
+  }
+  console.log(`Sending meme to ${logUsername}`);
   try {
     const thread = await igClient.getThread(friend.username);
     console.log(`Got thread for ${logUsername}`);
@@ -29,14 +32,20 @@ const sendMeme = async (friend) => {
     cache.addMemeSent(friend.username, url);
   } catch (err) {
     console.log(err);
-    console.log(`Sending meme to ${logUsername} failed`);
+    console.log(`Failed to send meme to ${logUsername}`);
   }
 };
 
 (async () => {
   try {
+    config.init();
+    if (!config.isActiveTime(new Date())) {
+      console.log('Sleep time. Good night!');
+      return;
+    }
     await igClient.login();
     cache.init();
+    console.log(cache.triggerNo);
     await Promise.all(config.friends.map((friend) => sendMeme(friend)));
     cache.deinit();
   } catch (err) {
