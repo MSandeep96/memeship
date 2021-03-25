@@ -30,20 +30,22 @@ export class Config implements ConfigType {
     }
   }
 
-  isActiveTime = (time: Date) => {
+  isActiveTime = (time: Date): boolean => {
     const offsetTime = this.offsetTime(time);
+    return this.checkIfBetween(offsetTime);
+  };
+
+  checkIfBetween = (time: Date): boolean => {
     if (this.startHour === this.stopAtHour) {
       return true;
     }
     if (this.startHour < this.stopAtHour) {
       return (
-        this.startHour <= offsetTime.getHours() &&
-        offsetTime.getHours() <= this.stopAtHour
+        this.startHour <= time.getHours() && time.getHours() <= this.stopAtHour
       );
     }
     return (
-      this.startHour <= offsetTime.getHours() ||
-      this.stopAtHour >= offsetTime.getHours()
+      this.startHour <= time.getHours() || this.stopAtHour >= time.getHours()
     );
   };
 
