@@ -30,5 +30,6 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Update cache.encrypt
+        push_options: '--force'
 
 
