@@ -48,7 +48,7 @@ class Cache {
           this.memesSent.set(username, new Set(memeUrls as string[]));
         });
         this.userIds = new Map(Object.entries(cache.userIds));
-        this.triggerNo = cache.triggerNo + 1;
+        if (cache.triggerNo !== undefined) this.triggerNo = cache.triggerNo + 1;
       } catch (e) {
         console.log('Failed to read cache');
       }

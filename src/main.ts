@@ -8,6 +8,7 @@ const sendMeme = async (friend) => {
   const logUsername = encryptor.encrypt(friend.username);
   if (cache.triggerNo % friend.frequency !== 0) {
     console.log(`Not sending meme to ${logUsername}`);
+    return;
   }
   console.log(`Sending meme to ${logUsername}`);
   try {
