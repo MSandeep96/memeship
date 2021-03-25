@@ -53,12 +53,13 @@ class Cache {
         console.log('Failed to read cache');
       }
     }
-    console.log(this.memesSent);
-    console.log(this.userIds);
   };
 
   deinit = (): void => {
     const cache = { memesSent: {}, userIds: {}, triggerNo: this.triggerNo };
+    if (this.triggerNo > 750) {
+      cache.triggerNo = 0; //reset after 750 triggers
+    }
     const memesSent = Object.fromEntries(this.memesSent);
     Object.entries(memesSent).forEach(([username, memesUrl]) => {
       cache.memesSent[username] = Array.from(memesUrl);

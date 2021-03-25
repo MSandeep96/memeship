@@ -3,6 +3,7 @@ import { RedditClient } from './reddit/reddit_client';
 import { cache } from './cache/cache';
 import { config } from './config/config';
 import { encryptor } from './util/cipher';
+import { promiseDelaySeconds } from './util/util';
 
 const sendMeme = async (friend) => {
   const logUsername = encryptor.encrypt(friend.username);
@@ -20,6 +21,7 @@ const sendMeme = async (friend) => {
       friend.subreddits
     );
     console.log(`Downloaded meme for ${logUsername}`);
+    await promiseDelaySeconds(Math.floor(Math.random() * 40));
     if (type === 'image') {
       await thread.broadcastPhoto({
         file: buffer,

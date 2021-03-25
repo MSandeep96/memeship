@@ -1,9 +1,7 @@
 import { createEncryptor } from 'simple-encryptor';
 
-export let encryptor;
-try {
-  encryptor = createEncryptor(process.env.SECRET_KEY);
-} catch (err) {
+if (!process.env.SECRET_KEY) {
   console.log('Missing environment variable SECRET_KEY');
   process.exit(1);
 }
+export const encryptor = createEncryptor(process.env.SECRET_KEY);
