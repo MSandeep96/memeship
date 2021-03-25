@@ -6,6 +6,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      CI: true
+      IG_USERNAME: ${{secrets.IG_USERNAME}}
+      IG_PASSWORD: ${{secrets.IG_PASSWORD}}
+      SECRET_KEY: ${{secrets.SECRET_KEY}}
 
     steps:
     - uses: actions/checkout@v2
@@ -14,5 +19,3 @@ jobs:
     - run: npm run lint --if-present
     - run: npm test
     - run: npm run build --if-present
-      env:
-        CI: true
