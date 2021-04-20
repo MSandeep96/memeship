@@ -31,5 +31,6 @@ jobs:
       with:
         commit_message: Update cache.encrypt
         push_options: '--force'
+        commit_author: github-actions <actions@github.com>
 
 
